@@ -1,0 +1,150 @@
+//****---------VARIABLES---------******//
+
+//COULEURS
+$text-primary-color: black;
+
+//****---------RESET---------******//
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'News Cycle', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: $text-primary-color;
+}
+
+li {
+  list-style: none;
+}
+
+//****---------BODY---------******//
+
+body {
+  background: no-repeat center/cover fixed url(../img/bg-cloud.jpg);
+  height: 100vh;
+  padding: 2rem 0;
+}
+
+//****---------HEADER---------******//
+
+header {
+  width: 80%;
+  margin: 0 auto 2rem auto;
+  @media screen and (min-width: 600px) {
+    width: 400px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  //   .city-choice,
+  //   .select-city {
+  //     line-height: normal;
+  //   }
+
+  .city-choice {
+    font-size: 1.5rem;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0.2rem 0.8rem;
+  }
+
+  .select-city {
+    font-size: 1.2rem;
+    font-weight: bold;
+    float: right;
+    padding: 0.5rem 1rem;
+    // width: 40%;
+    border-radius: 5px;
+    border: none;
+
+    @media screen and (max-width: 500px) {
+      width: 160px;
+    }
+  }
+
+  #select-the-good-city {
+    visibility: hidden;
+
+    .active {
+      visibility: visible;
+    }
+  }
+}
+
+//****---------ACTUAL WEATHER---------******//
+
+.actual-weather {
+  background: rgba(211, 211, 211, 0.432);
+  width: 80%;
+  height: 150px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+//****---------MAIN---------******//
+
+.weather {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  @media screen and (min-width: 900px) {
+    gap: 1rem;
+    // width: 720px;
+  }
+
+  > div {
+    background: rgba(211, 211, 211, 0.432);
+    width: 20%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    @media screen and (min-width: 900px) {
+      height: 200px;
+      font-size: 2rem;
+    }
+  }
+
+  .value {
+    color: lightcyan;
+  }
+}
+
+//****---------FOOTER---------******//
+
+footer {
+  //   height: 200px;
+  width: 100%;
+  .atribute {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: lightgray;
+    a {
+      text-decoration: underline;
+      color: lightgray;
+    }
+  }
+}
+
+//****---------XXX XXX---------******//
+//****---------XXX XXX---------******//

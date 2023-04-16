@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Météo app</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="./public/img/favicon_nuage.png" type="image/x-icon">
+</head>
+
+<body>
+
+  <header>
+    <h1>Pierre vous présente la météo, la vraie</h1>
+
+    <form id="cityForm" action="post">
+      <input type="text" name="city" id="city" class="city-choice" placeholder="Ex : Brest">
+      <button class="select-city">Selectionner cette ville</button>
+    </form>
+    <select name="select-the-city" id="select-the-good-city">
+      <option value="">Plusieurs villes portent le même nom :</option>
+    </select>
+  </header>
+
+  <main>
+    <div class="actual-weather">
+      <h2 class="value city">Cambrai</h2>
+      <div class="weather-city">
+        <div class="weather-icon">
+          <img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather" width="80px">
+        </div>
+        <div>
+          <div class="value temp-value">24°C</div>
+          <div class="temp-icon"><img src="./public/img/thermometre.png" alt="weather" width="45px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="weather">
+      <div class="temp">
+        <div class="value temp-value">24°C</div>
+        <div class="temp-icon"><img src="./public/img/thermometre.png" alt="weather" width="45px"></div>
+      </div>
+      <div class="weather-city">
+        <div class="value city">Cambrai</div>
+        <div class="weather-icon"><img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather"
+            width="80px"></div>
+      </div>
+      <div class="weather-city">
+        <div class="value city">Cambrai</div>
+        <div class="weather-icon"><img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather"
+            width="80px"></div>
+      </div>
+      <div class="wet">
+        <div class="value wet-value">40 %</div>
+        <div class="wet-icon"><img src="./public/img/humidite.png" alt="weather" width="50px"></div>
+      </div>
+      <div class="wind">
+        <div class="value wind-value">4,6 km/h</div>
+        <div class="wind-icon"><img src="./public/img/wind-power.png" alt="weather" width="50px"></div>
+      </div>
+    </div> -->
+  </main>
+
+  <footer>
+    <!-- <p>&copy; Pierre Davoine</p> -->
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
