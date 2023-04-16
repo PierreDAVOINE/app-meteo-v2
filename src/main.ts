@@ -1,94 +1,94 @@
 import './style.scss';
 
 interface CityProps {
-  lon: number;
   lat: number;
+  lon: number;
 }
 
-const app = {
+const app: AppProps = {
   apiKey: '9843a344764c7816f2325b732271f5e4',
-  // Formulaire
-  cityForm: document.getElementById('cityForm'),
-  // input de la ville
-  cityInput: document.querySelector('#city'),
-  // btn de validation
-  btnGet: document.querySelector('.select-city'),
-  // menu déroulant pour doublons
-  citySelect: document.querySelector('#select-the-good-city'),
-  values: document.querySelectorAll('.value'),
-  // div.city pour afficher le nom de la ville séléctionné
-  cityShow: document.querySelector('.city'),
-  // div#imgWeather pour afficher l'icone de la météo dynamiquement
-  weatherImg: document.querySelector('#imgWeather'),
-  // div.temp-value pour afficher la temperature
-  tempShow: document.querySelector('.temp-value'),
-  // div.wet-value pour afficher l'humidité
-  wetShow: document.querySelector('.wet-value'),
-  // div.wind-value pour afficher la vitesse du vent
-  windShow: document.querySelector('.wind-value'),
+  actualCity: 'Paris',
+  actualCityTitle: document.querySelector('#now h2'),
+  actualWeatherTxt: document.getElementById('actual-weather_txt'),
+  actualWeatherImg: document.getElementById('actual-weather_img'),
+  actualTempTxt: document.getElementById('actual-temp_txt'),
+  actualFeelTxt: document.getElementById('actual-feel_txt'),
+  actualWindTxt: document.getElementById('actual-wind_txt'),
+  actualHumidityTxt: document.getElementById('actual-humidity_txt'),
+  actualSunTxt: document.getElementById('actual-sun_txt'),
+  actualSunImg: document.getElementById('actual-sun_img'),
   init: async () => {
     console.log("Initialisation de l'application en cours...");
-    // Mise sur écoute des éléments du DOM
-    const actualCity = await app.getLocation();
-    const actualWheather = await app.getWeather(actualCity);
+    const actualCityLoc: any = await app.getLocation();
+    const actualWheather = await app.getWeather(actualCityLoc);
     app.showWeatherInDOm(actualWheather);
     console.log('Application initialisée.');
   },
   handleForm: () => {
     console.log('Réception du formulaire...');
   },
-  getLocation: async (city = 'Paris') => {
+  getLocation: async () => {
     console.log(
-      `Récupération des coordonnées en cours pour la ville de ${city}...`
+      `Récupération des coordonnées en cours pour la ville de ${app.actualCity}...`
     );
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city.toLowerCase()},fr&limit=2&appid=${
+        `http://api.openweathermap.org/geo/1.0/direct?q=${app.actualCity.toLowerCase()},fr&limit=2&appid=${
           app.apiKey
         }`
       );
       if (response.status !== 200) throw new Error('Problème API');
       const json = await response.json();
       const actualCity = {
-        lat: '',
-        lon: '',
+        lat: 0,
+        lon: 0,
       };
       if (json.length > 1) {
         actualCity.lat = json[0].lat;
         actualCity.lon = json[0].lon;
         return actualCity;
       } else if (json.length === 1) {
-        actualCity.lat = json[0].lat;
-        actualCity.lon = json[0].lon;
+        actualCity.lat = json.lat;
+        actualCity.lon = json.lon;
         return actualCity;
       } else {
-        // TODOS: créer un systeme de notification
         console.log('Ville non trouvée...');
+        return actualCity;
       }
-    } catch (error: string) {
-      console.error(error.message);
+    } catch (error: unknown) {
+      console.error(error);
     }
   },
-  getWeather: async (actualCity: CityProps) => {
-    const { lat, lon } = actualCity;
+  getWeather: async (actualCityLoc: CityProps) => {
+    const { lat, lon } = actualCityLoc;
     console.log(
       `Recherche de la météo pour la lattitude : ${lat} et longitude : ${lon}`
     );
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${app.apiKey}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=fr&units=metric&appid=${app.apiKey}`
       );
       if (response.status !== 200) throw new Error('Problème API');
       const json = await response.json();
+      console.log(json);
       console.log('Données réceptionnées');
       return json;
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   },
   showWeatherInDOm: (data: {}) => {
     console.log('Affichage des données en cours...');
     console.log(data);
+    app.actualCityTitle.textContent = `Actuellement à ${app.actualCity} :`;
+    app.actualWeatherTxt.textContent = data.weather[0].description;
+    app.actualWeatherImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+    app.actualTempTxt.textContent = `${data.main.temp}°C`;
+    app.actualFeelTxt.textContent = `Ressenti : ${data.main.feels_like}°C`;
+    app.actualWindTxt.textContent = `${data.wind.speed} m/s`;
+    app.actualHumidityTxt.textContent = `${data.main.humidity}% d'humitité`;
+    app.actualSunTxt.textContent = `Se lève à 06h00 se couche à 20h00`;
+    // actualSunImg: ;
 
     console.log('Données actualisées dans le DOM.');
   },

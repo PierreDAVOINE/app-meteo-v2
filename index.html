@@ -8,8 +8,8 @@
   <title>Météo app</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="./public/img/favicon_nuage.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="./img/favicon_nuage.png" type="image/x-icon">
 </head>
 
 <body>
@@ -17,58 +17,49 @@
   <header>
     <h1>Pierre vous présente la météo, la vraie</h1>
 
-    <form id="cityForm" action="post">
-      <input type="text" name="city" id="city" class="city-choice" placeholder="Ex : Brest">
-      <button class="select-city">Selectionner cette ville</button>
+    <form class="form" id="cityForm" action="post">
+      <label for="city" class="form__label">
+      </label>
+      <input type="text" name="city" id="city" class="form__input" placeholder="Ex : Brest">
+      <button type="submit" class="form__button"><img src="./img/search.svg" alt="search"></button>
     </form>
-    <select name="select-the-city" id="select-the-good-city">
-      <option value="">Plusieurs villes portent le même nom :</option>
-    </select>
+    <div id="notifications"></div>
   </header>
 
   <main>
-    <div class="actual-weather">
-      <h2 class="value city">Cambrai</h2>
-      <div class="weather-city">
-        <div class="weather-icon">
-          <img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather" width="80px">
+    <div id="now">
+      <h2>Actuellement à Brest :</h2>
+      <div class="weather-container">
+
+        <div class="weather-container__window">
+          <span id="actual-weather_txt">Pluie modérée</span>
+          <img id="actual-weather_img" src="https://openweathermap.org/img/wn/09d.png" alt="nuages">
         </div>
-        <div>
-          <div class="value temp-value">24°C</div>
-          <div class="temp-icon"><img src="./public/img/thermometre.png" alt="weather" width="45px"></div>
+        <div class="weather-container__window">
+          <span id="actual-temp_txt">0°C</span>
+          <img id="actual-temps_img" src="./img/thermometre.png" alt="temperature">
         </div>
+        <div class="weather-container__window">
+          <span id="actual-feel_txt">Ressentis: 0°C</span>
+          <img id="actual-feel_img" src="./img/thermometre.png" alt="temperature">
+        </div>
+        <div class="weather-container__window">
+          <span id="actual-wind_txt">0km/h</span>
+          <img id="actual-wind_img" src="./img/wind-power.png" alt="wind">
+        </div>
+        <div class="weather-container__window">
+          <span id="actual-humidity_txt">0% d'humidité</span>
+          <img id="actual-humidity_img" src="./img/humidite.png" alt="Humidité">
+        </div>
+        <div class="weather-container__window">
+          <span id="actual-sun_txt">Levé à 06h00 couché à 20h00</span>
+          <img id="actual-sun_img" src="https://openweathermap.org/img/wn/01d.png" alt="sun">
+        </div>
+
+
       </div>
     </div>
-
-    <!-- <div class="weather">
-      <div class="temp">
-        <div class="value temp-value">24°C</div>
-        <div class="temp-icon"><img src="./public/img/thermometre.png" alt="weather" width="45px"></div>
-      </div>
-      <div class="weather-city">
-        <div class="value city">Cambrai</div>
-        <div class="weather-icon"><img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather"
-            width="80px"></div>
-      </div>
-      <div class="weather-city">
-        <div class="value city">Cambrai</div>
-        <div class="weather-icon"><img id="imgWeather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather"
-            width="80px"></div>
-      </div>
-      <div class="wet">
-        <div class="value wet-value">40 %</div>
-        <div class="wet-icon"><img src="./public/img/humidite.png" alt="weather" width="50px"></div>
-      </div>
-      <div class="wind">
-        <div class="value wind-value">4,6 km/h</div>
-        <div class="wind-icon"><img src="./public/img/wind-power.png" alt="weather" width="50px"></div>
-      </div>
-    </div> -->
   </main>
-
-  <footer>
-    <!-- <p>&copy; Pierre Davoine</p> -->
-  </footer>
 
   <script type="module" src="/src/main.ts"></script>
 </body>

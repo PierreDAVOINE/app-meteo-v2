@@ -1,150 +1,124 @@
+@use 'reset';
 //****---------VARIABLES---------******//
 
 //COULEURS
 $text-primary-color: black;
-
-//****---------RESET---------******//
-*,
-::after,
-::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'News Cycle', sans-serif;
-}
-
-a {
-  text-decoration: none;
-  color: $text-primary-color;
-}
-
-li {
-  list-style: none;
-}
 
 //****---------BODY---------******//
 
 body {
   background: no-repeat center/cover fixed url(../img/bg-cloud.jpg);
   height: 100vh;
-  padding: 2rem 0;
+  width: 100vw;
+  padding: 2rem;
+  font-family: 'Hind Madurai', sans-serif;
+}
+
+header,
+main {
+  max-width: 670px;
 }
 
 //****---------HEADER---------******//
 
 header {
-  width: 80%;
-  margin: 0 auto 2rem auto;
-  @media screen and (min-width: 600px) {
-    width: 400px;
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    font-size: 1.5rem;
-  }
-
-  //   .city-choice,
-  //   .select-city {
-  //     line-height: normal;
-  //   }
-
-  .city-choice {
-    font-size: 1.5rem;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 0.2rem 0.8rem;
-  }
-
-  .select-city {
-    font-size: 1.2rem;
-    font-weight: bold;
-    float: right;
-    padding: 0.5rem 1rem;
-    // width: 40%;
-    border-radius: 5px;
-    border: none;
-
-    @media screen and (max-width: 500px) {
-      width: 160px;
-    }
-  }
-
-  #select-the-good-city {
-    visibility: hidden;
-
-    .active {
-      visibility: visible;
-    }
-  }
-}
-
-//****---------ACTUAL WEATHER---------******//
-
-.actual-weather {
-  background: rgba(211, 211, 211, 0.432);
-  width: 80%;
-  height: 150px;
-  margin: auto;
+  margin: 0 auto;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 2rem;
+  // border: 1px solid white;
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
 }
 
-//****---------MAIN---------******//
+.form {
+  // border: 1px solid blue;
+  padding: 1rem;
+  width: 100%;
+  position: relative;
+  &__input {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(240, 255, 255, 0.846);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+    transition: 0.2s ease;
+    &:focus {
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      outline: none;
+    }
+  }
+  &__button {
+    position: absolute;
+    background: none;
+    border: none;
+    right: 1rem;
+    top: 1rem;
+    width: 3rem;
+    height: 2.8rem;
+    cursor: pointer;
 
-.weather {
-  width: 80%;
-  margin: auto;
+    img {
+      width: 70%;
+    }
+  }
+}
+
+//****--------
+
+main {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#now {
+  background-color: rgba(240, 248, 255, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0 auto;
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.8rem 0;
+  }
+}
+
+//****---------WEATHER CONTAINER---------******//
+
+.weather-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2px;
-  @media screen and (min-width: 900px) {
-    gap: 1rem;
-    // width: 720px;
+  gap: 1rem;
+  font-size: 1.2rem;
+  img {
+    width: 3rem;
+    padding: 0.3rem;
   }
-
-  > div {
-    background: rgba(211, 211, 211, 0.432);
-    width: 20%;
-    height: 150px;
+  #actual-weather_img,
+  #actual-sun_img {
+    width: 4rem;
+    padding: 0;
+  }
+  &__window {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    @media screen and (min-width: 900px) {
-      height: 200px;
-      font-size: 2rem;
-    }
-  }
-
-  .value {
-    color: lightcyan;
+    justify-content: space-evenly;
+    padding: 0.5rem;
+    // min-width: 40%;
+    // max-width: 50%;
+    width: 150px;
+    text-align: center;
   }
 }
 
 //****---------FOOTER---------******//
-
-footer {
-  //   height: 200px;
-  width: 100%;
-  .atribute {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    color: lightgray;
-    a {
-      text-decoration: underline;
-      color: lightgray;
-    }
-  }
-}
-
-//****---------XXX XXX---------******//
-//****---------XXX XXX---------******//
