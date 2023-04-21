@@ -1,11 +1,7 @@
+import { IApp, CityProps } from './@types/app';
 import './style.scss';
 
-interface CityProps {
-  lat: number;
-  lon: number;
-}
-
-const app: AppProps = {
+const app: IApp = {
   apiKey: '9843a344764c7816f2325b732271f5e4',
   actualCity: 'Paris',
   actualCityTitle: document.querySelector('#now h2'),
@@ -19,7 +15,7 @@ const app: AppProps = {
   actualSunImg: document.getElementById('actual-sun_img'),
   init: async () => {
     console.log("Initialisation de l'application en cours...");
-    const actualCityLoc: any = await app.getLocation();
+    const actualCityLoc = await app.getLocation();
     const actualWheather = await app.getWeather(actualCityLoc);
     app.showWeatherInDOm(actualWheather);
     console.log('Application initialisée.');
@@ -57,6 +53,7 @@ const app: AppProps = {
       }
     } catch (error: unknown) {
       console.error(error);
+      return;
     }
   },
   getWeather: async (actualCityLoc: CityProps) => {
@@ -75,12 +72,15 @@ const app: AppProps = {
       return json;
     } catch (error) {
       console.error(error);
+      return;
     }
   },
   showWeatherInDOm: (data: {}) => {
     console.log('Affichage des données en cours...');
     console.log(data);
-    app.actualCityTitle.textContent = `Actuellement à ${app.actualCity} :`;
+    app.actualCityTitle.textContent = `Actuellement à ${
+      app.actualCity ? app.actualCity : ''
+    } :`;
     app.actualWeatherTxt.textContent = data.weather[0].description;
     app.actualWeatherImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
     app.actualTempTxt.textContent = `${data.main.temp}°C`;
