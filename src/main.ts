@@ -1,18 +1,20 @@
-import { IApp, CityProps } from './@types/app';
+import { IApp, CityProps, IData } from './@types/app';
 import './style.scss';
 
 const app: IApp = {
   apiKey: '9843a344764c7816f2325b732271f5e4',
   actualCity: 'Paris',
-  actualCityTitle: document.querySelector('#now h2'),
-  actualWeatherTxt: document.getElementById('actual-weather_txt'),
-  actualWeatherImg: document.getElementById('actual-weather_img'),
-  actualTempTxt: document.getElementById('actual-temp_txt'),
-  actualFeelTxt: document.getElementById('actual-feel_txt'),
-  actualWindTxt: document.getElementById('actual-wind_txt'),
-  actualHumidityTxt: document.getElementById('actual-humidity_txt'),
-  actualSunTxt: document.getElementById('actual-sun_txt'),
-  actualSunImg: document.getElementById('actual-sun_img'),
+  actualCityTitle: document.querySelector('#now h2')!,
+  actualWeatherTxt: document.getElementById('actual-weather_txt')!,
+  actualWeatherImg: document.getElementById(
+    'actual-weather_img'
+  )! as HTMLImageElement,
+  actualTempTxt: document.getElementById('actual-temp_txt')!,
+  actualFeelTxt: document.getElementById('actual-feel_txt')!,
+  actualWindTxt: document.getElementById('actual-wind_txt')!,
+  actualHumidityTxt: document.getElementById('actual-humidity_txt')!,
+  actualSunTxt: document.getElementById('actual-sun_txt')!,
+  actualSunImg: document.getElementById('actual-sun_img')!,
   init: async () => {
     console.log("Initialisation de l'application en cours...");
     const actualCityLoc = await app.getLocation();
@@ -75,12 +77,10 @@ const app: IApp = {
       return;
     }
   },
-  showWeatherInDOm: (data: {}) => {
+  showWeatherInDOm: (data: IData) => {
     console.log('Affichage des données en cours...');
     console.log(data);
-    app.actualCityTitle.textContent = `Actuellement à ${
-      app.actualCity ? app.actualCity : ''
-    } :`;
+    app.actualCityTitle.textContent = `Actuellement à ${app.actualCity}`;
     app.actualWeatherTxt.textContent = data.weather[0].description;
     app.actualWeatherImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
     app.actualTempTxt.textContent = `${data.main.temp}°C`;

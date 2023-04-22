@@ -6,18 +6,34 @@ interface CityProps {
 export interface IApp {
   apiKey: string;
   actualCity: string;
-  actualCityTitle: HTMLTitleElement | null;
-  actualWeatherTxt: HTMLSpanElement | null;
-  actualWeatherImg: HTMLElement | null;
-  actualTempTxt: HTMLSpanElement | null;
-  actualFeelTxt: HTMLSpanElement | null;
-  actualWindTxt: HTMLSpanElement | null;
-  actualHumidityTxt: HTMLSpanElement | null;
-  actualSunTxt: HTMLSpanElement | null;
-  actualSunImg: HTMLElement | null;
+  actualCityTitle: HTMLTitleElement;
+  actualWeatherTxt: HTMLSpanElement;
+  actualWeatherImg: HTMLImageElement;
+  actualTempTxt: HTMLSpanElement;
+  actualFeelTxt: HTMLSpanElement;
+  actualWindTxt: HTMLSpanElement;
+  actualHumidityTxt: HTMLSpanElement;
+  actualSunTxt: HTMLSpanElement;
+  actualSunImg: HTMLElement;
   init: () => void;
   handleForm: () => void;
   getLocation: () => Promise;
   getWeather: (CityProps) => {};
-  showWeatherInDOm: ({}) => voi;
+  showWeatherInDOm: (IData) => void;
+}
+export interface IData {
+  weather: [
+    {
+      description: string;
+      icon: string;
+    }
+  ];
+  main: {
+    temp: number;
+    feels_like: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+  };
 }
