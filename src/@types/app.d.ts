@@ -15,6 +15,8 @@ export interface IApp {
   actualHumidityTxt: HTMLSpanElement;
   actualSunTxt: HTMLSpanElement;
   actualSunImg: HTMLElement;
+  sunrise: number;
+  sunset: number;
   init: () => void;
   handleForm: () => void;
   getLocation: () => Promise;
@@ -35,5 +37,9 @@ export interface IData {
   };
   wind: {
     speed: number;
+  };
+  sys: {
+    sunrise: number;
+    sunset: number;
   };
 }

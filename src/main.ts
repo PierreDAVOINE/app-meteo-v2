@@ -81,13 +81,31 @@ const app: IApp = {
     console.log('Affichage des données en cours...');
     console.log(data);
     app.actualCityTitle.textContent = `Actuellement à ${app.actualCity}`;
-    app.actualWeatherTxt.textContent = data.weather[0].description;
+    const weatherDescription = data.weather[0].description;
+    app.actualWeatherTxt.textContent =
+      weatherDescription[0].toUpperCase() + weatherDescription.slice(1);
     app.actualWeatherImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
-    app.actualTempTxt.textContent = `${data.main.temp}°C`;
-    app.actualFeelTxt.textContent = `Ressenti : ${data.main.feels_like}°C`;
-    app.actualWindTxt.textContent = `${data.wind.speed} m/s`;
-    app.actualHumidityTxt.textContent = `${data.main.humidity}% d'humitité`;
-    app.actualSunTxt.textContent = `Se lève à 06h00 se couche à 20h00`;
+    app.actualTempTxt.textContent = `${data.main.temp.toFixed(1)}°C`;
+    app.actualFeelTxt.textContent = `Ressenti : ${data.main.feels_like.toFixed(
+      1
+    )}°C`;
+    app.actualWindTxt.textContent = `${(data.wind.speed * 3.6).toFixed(
+      2
+    )} km/h`;
+    app.actualHumidityTxt.textContent = `${Math.round(
+      data.main.humidity
+    )}% d'humitité`;
+    // Convertion des timestamp sunrise et sunset en heures minutes au format HH:MM
+    const sunrise =
+      '0' +
+      new Date(data.sys.sunrise * 1000).getHours() +
+      'h' +
+      new Date(data.sys.sunrise * 1000).getMinutes();
+    const sunset =
+      new Date(data.sys.sunset * 1000).getHours() +
+      'h' +
+      new Date(data.sys.sunset * 1000).getMinutes();
+    app.actualSunTxt.textContent = `Levé à ${sunrise} couché à ${sunset}`;
     // actualSunImg: ;
 
     console.log('Données actualisées dans le DOM.');
