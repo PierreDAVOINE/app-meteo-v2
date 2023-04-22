@@ -15,13 +15,13 @@ export interface IApp {
   actualHumidityTxt: HTMLSpanElement;
   actualSunTxt: HTMLSpanElement;
   actualSunImg: HTMLElement;
-  sunrise: number;
-  sunset: number;
+  cityForm: HTMLFormElement;
   init: () => void;
-  handleForm: () => void;
+  refreshApp: () => void;
   getLocation: () => Promise;
   getWeather: (CityProps) => {};
   showWeatherInDOm: (IData) => void;
+  handleFormSubmit: (e: Event) => void;
 }
 export interface IData {
   weather: [

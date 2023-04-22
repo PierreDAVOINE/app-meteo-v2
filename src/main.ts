@@ -15,15 +15,19 @@ const app: IApp = {
   actualHumidityTxt: document.getElementById('actual-humidity_txt')!,
   actualSunTxt: document.getElementById('actual-sun_txt')!,
   actualSunImg: document.getElementById('actual-sun_img')!,
+  cityForm: document.getElementById('city-form')! as HTMLFormElement,
+  // cityInput: document.getElementById('city')!,
   init: async () => {
     console.log("Initialisation de l'application en cours...");
+    app.cityForm.addEventListener('submit', app.handleFormSubmit);
+    app.refreshApp();
+    console.log('Application initialisée.');
+  },
+  refreshApp: async () => {
+    console.log('Réception du formulaire...');
     const actualCityLoc = await app.getLocation();
     const actualWheather = await app.getWeather(actualCityLoc);
     app.showWeatherInDOm(actualWheather);
-    console.log('Application initialisée.');
-  },
-  handleForm: () => {
-    console.log('Réception du formulaire...');
   },
   getLocation: async () => {
     console.log(
@@ -109,6 +113,14 @@ const app: IApp = {
     // actualSunImg: ;
 
     console.log('Données actualisées dans le DOM.');
+  },
+  //TODO: Gérer les erreurs de saisie !
+  handleFormSubmit: async (e) => {
+    e.preventDefault();
+    console.log('Soumission du formulaire. Récupération des données...');
+    const data = new FormData(app.cityForm);
+    app.actualCity = data.get('city')?.toString()!;
+    app.refreshApp();
   },
 };
 
