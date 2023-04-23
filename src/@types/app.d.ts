@@ -4,7 +4,7 @@ interface CityProps {
 }
 
 export interface IApp {
-  apiKey: string;
+  counterRefresh: number;
   actualCity: string;
   actualCityTitle: HTMLTitleElement;
   actualWeatherTxt: HTMLSpanElement;

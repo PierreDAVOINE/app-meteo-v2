@@ -1,8 +1,9 @@
 import { IApp, CityProps, IData } from './@types/app';
 import './style.scss';
+const apiKey = import.meta.env.VITE_API_KEY;
 
 const app: IApp = {
-  apiKey: '9843a344764c7816f2325b732271f5e4',
+  counterRefresh: 0,
   actualCity: 'Paris',
   actualCityTitle: document.querySelector('#now h2')!,
   actualWeatherTxt: document.getElementById('actual-weather_txt')!,
@@ -28,7 +29,6 @@ const app: IApp = {
   refreshApp: async () => {
     console.log('Réception du formulaire...');
     const actualCityLoc = await app.getLocation();
-    console.log(actualCityLoc);
     if (
       (actualCityLoc.lat === 0 && actualCityLoc.lon === 0) ||
       actualCityLoc.lat === undefined ||
@@ -37,6 +37,9 @@ const app: IApp = {
       app.notify("Aucune ville n'a été trouvée à ce nom... 😢", 5, 'error');
     } else {
       const actualWheather = await app.getWeather(actualCityLoc);
+      app.counterRefresh > 0 &&
+        app.notify(`Voici la météo pour ${app.actualCity} 😄`, 5, 'nice');
+      app.counterRefresh++;
       app.showWeatherInDOm(actualWheather);
       app.cityInput.value = '';
     }
@@ -47,9 +50,7 @@ const app: IApp = {
     );
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${app.actualCity.toLowerCase()},fr&limit=2&appid=${
-          app.apiKey
-        }`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${app.actualCity.toLowerCase()},fr&limit=2&appid=${apiKey}`
       );
       if (response.status !== 200) throw new Error('Problème API');
       const json = await response.json();
@@ -81,7 +82,7 @@ const app: IApp = {
     );
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=fr&units=metric&appid=${app.apiKey}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=fr&units=metric&appid=${apiKey}`
       );
       if (response.status !== 200) throw new Error('Problème API');
       const json = await response.json();
@@ -125,14 +126,15 @@ const app: IApp = {
 
     console.log('Données actualisées dans le DOM.');
   },
-  //TODO: Gérer les erreurs de saisie !
   handleFormSubmit: (e) => {
     e.preventDefault();
     console.log('Soumission du formulaire. Récupération des données...');
     const data = new FormData(app.cityForm);
     const newCity: any = data.get('city')?.toString()!;
-    if (isNaN(newCity)) {
-      app.actualCity = newCity;
+    const newCityConverted: any = encodeURIComponent(newCity);
+    console.log(newCityConverted);
+    if (isNaN(newCityConverted)) {
+      app.actualCity = newCityConverted;
       app.refreshApp();
     } else {
       app.notify(
@@ -143,7 +145,6 @@ const app: IApp = {
     }
   },
   notify: (message, timout = 3, theme = 'neutral') => {
-    console.log('Message en cours');
     app.notificationsDiv.className = theme;
     app.notificationsDiv.textContent = message;
     setTimeout(() => {
