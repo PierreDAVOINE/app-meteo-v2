@@ -16,12 +16,19 @@ export interface IApp {
   actualSunTxt: HTMLSpanElement;
   actualSunImg: HTMLElement;
   cityForm: HTMLFormElement;
+  cityInput: HTMLInputElement;
+  notificationsDiv: HTMLDivElement;
   init: () => void;
   refreshApp: () => void;
   getLocation: () => Promise;
   getWeather: (CityProps) => {};
   showWeatherInDOm: (IData) => void;
   handleFormSubmit: (e: Event) => void;
+  notify: (
+    message: string,
+    timing?: number,
+    theme?: 'neutral' | 'error' | 'nice'
+  ) => void;
 }
 export interface IData {
   weather: [

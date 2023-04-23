@@ -16,18 +16,30 @@ const app: IApp = {
   actualSunTxt: document.getElementById('actual-sun_txt')!,
   actualSunImg: document.getElementById('actual-sun_img')!,
   cityForm: document.getElementById('city-form')! as HTMLFormElement,
-  // cityInput: document.getElementById('city')!,
+  cityInput: document.getElementById('city')! as HTMLInputElement,
+  notificationsDiv: document.getElementById('notifications')! as HTMLDivElement,
   init: async () => {
     console.log("Initialisation de l'application en cours...");
     app.cityForm.addEventListener('submit', app.handleFormSubmit);
     app.refreshApp();
     console.log('Application initialisée.');
+    app.notify('Bienvenue, veuillez choisir votre ville');
   },
   refreshApp: async () => {
     console.log('Réception du formulaire...');
     const actualCityLoc = await app.getLocation();
-    const actualWheather = await app.getWeather(actualCityLoc);
-    app.showWeatherInDOm(actualWheather);
+    console.log(actualCityLoc);
+    if (
+      (actualCityLoc.lat === 0 && actualCityLoc.lon === 0) ||
+      actualCityLoc.lat === undefined ||
+      actualCityLoc.lon === undefined
+    ) {
+      app.notify("Aucune ville n'a été trouvée à ce nom... 😢", 5, 'error');
+    } else {
+      const actualWheather = await app.getWeather(actualCityLoc);
+      app.showWeatherInDOm(actualWheather);
+      app.cityInput.value = '';
+    }
   },
   getLocation: async () => {
     console.log(
@@ -83,7 +95,6 @@ const app: IApp = {
   },
   showWeatherInDOm: (data: IData) => {
     console.log('Affichage des données en cours...');
-    console.log(data);
     app.actualCityTitle.textContent = `Actuellement à ${app.actualCity}`;
     const weatherDescription = data.weather[0].description;
     app.actualWeatherTxt.textContent =
@@ -115,12 +126,29 @@ const app: IApp = {
     console.log('Données actualisées dans le DOM.');
   },
   //TODO: Gérer les erreurs de saisie !
-  handleFormSubmit: async (e) => {
+  handleFormSubmit: (e) => {
     e.preventDefault();
     console.log('Soumission du formulaire. Récupération des données...');
     const data = new FormData(app.cityForm);
-    app.actualCity = data.get('city')?.toString()!;
-    app.refreshApp();
+    const newCity: any = data.get('city')?.toString()!;
+    if (isNaN(newCity)) {
+      app.actualCity = newCity;
+      app.refreshApp();
+    } else {
+      app.notify(
+        'Vous avez saisit un nombre ! Veuillez saisir une ville française 😄',
+        5,
+        'error'
+      );
+    }
+  },
+  notify: (message, timout = 3, theme = 'neutral') => {
+    console.log('Message en cours');
+    app.notificationsDiv.className = theme;
+    app.notificationsDiv.textContent = message;
+    setTimeout(() => {
+      app.notificationsDiv.className = '';
+    }, timout * 1000);
   },
 };
 
