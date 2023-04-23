@@ -33,6 +33,8 @@ export interface IApp {
 export interface IData {
   weather: [
     {
+      id: number;
+      main: string;
       description: string;
       icon: string;
     }

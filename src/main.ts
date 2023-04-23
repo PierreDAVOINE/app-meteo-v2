@@ -122,10 +122,16 @@ const app: IApp = {
       'h' +
       new Date(data.sys.sunset * 1000).getMinutes();
     app.actualSunTxt.textContent = `Levé à ${sunrise} couché à ${sunset}`;
-    // actualSunImg: ;
+    // Actualisation du background
+    if (data.weather[0].id.toString()[0] === '7') {
+      document.body.style.background = `url('../img/Fog.jpg') no-repeat center/cover fixed`;
+    } else {
+      document.body.style.background = `url('../img/${data.weather[0].main}.jpg') no-repeat center/cover fixed`;
+    }
 
     console.log('Données actualisées dans le DOM.');
   },
+  //TODO: pb avec encoreuricomponent impossible de saisir des noms composé comme villers-sur-mer
   handleFormSubmit: (e) => {
     e.preventDefault();
     console.log('Soumission du formulaire. Récupération des données...');
