@@ -4,6 +4,7 @@ interface CityProps {
 }
 
 export interface IApp {
+  months: string[];
   counterRefresh: number;
   actualCity: string;
   actualCityTitle: HTMLTitleElement;
@@ -15,14 +16,20 @@ export interface IApp {
   actualHumidityTxt: HTMLSpanElement;
   actualSunTxt: HTMLSpanElement;
   actualSunImg: HTMLElement;
+  forecastHoursDiv: HTMLDivElement;
+  forecastDaysDiv: HTMLDivElement;
   cityForm: HTMLFormElement;
   cityInput: HTMLInputElement;
   notificationsDiv: HTMLDivElement;
   init: () => void;
   refreshApp: () => void;
   getLocation: () => Promise;
-  getWeather: (CityProps) => {};
-  showWeatherInDOm: (IData) => void;
+  getWeather: (actualCityLoc: CityProps) => Promise<IData>;
+  getForecast: (actualCityLoc: CityProps) => Promise<IArrayData>;
+  showWeatherInDom: (data: IData) => void;
+  showForecastHoursInDom: (data: IArrayData) => void;
+  showForecastDaysInDom: (data: IArrayData) => void;
+  getForecastPerDay: (day: number, data: IArrayData) => IDayForecast;
   handleFormSubmit: (e: Event) => void;
   notify: (
     message: string,
@@ -30,6 +37,13 @@ export interface IApp {
     theme?: 'neutral' | 'error' | 'nice'
   ) => void;
 }
+
+export interface IArrayData {
+  [i: number]: IData;
+  find(arg0: (date: IData) => boolean): IData;
+  array: IData[];
+}
+
 export interface IData {
   weather: [
     {
@@ -50,5 +64,21 @@ export interface IData {
   sys: {
     sunrise: number;
     sunset: number;
+  };
+  dt: number;
+  dt_txt?: string;
+}
+
+export interface IDayForecast {
+  date: string;
+  am: {
+    weatherIcon: string;
+    altIcon: string;
+    temp: string;
+  };
+  pm: {
+    weatherIcon: string;
+    altIcon: string;
+    temp: string;
   };
 }
