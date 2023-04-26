@@ -15,7 +15,6 @@
 <body>
   <header>
     <h1>Pierre vous présente la météo, la vraie</h1>
-
     <form class="form" id="city-form" action="post">
       <label for="city" class="form__label">
       </label>
@@ -26,6 +25,7 @@
   </header>
 
   <main>
+    <!-- ===== Météo actuelle // Actual weather ===== -->
     <div id="now">
       <h2>Actuellement à Brest :</h2>
       <div class="weather-container">
@@ -54,12 +54,13 @@
           <span id="actual-sun_txt">Levé à 06h00 couché à 20h00</span>
           <img id="actual-sun_img" src="https://openweathermap.org/img/wn/01d.png" alt="sun">
         </div>
-
-
       </div>
     </div>
 
+    <!-- ===== Prévisions prochaines heures // Forecast for next hours ===== -->
     <div id="forecastHours"></div>
+
+    <!-- ===== Prévisions prochains jours // Actual for next days ===== -->
     <div id="forecastDays"></div>
   </main>
 
