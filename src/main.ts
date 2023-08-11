@@ -95,6 +95,7 @@ const app: IApp = {
         console.log('Ville non trouvée...');
         return actualCity;
       } else {
+        app.actualCity = json[0].name;
         actualCity.lat = json[0].lat;
         actualCity.lon = json[0].lon;
         return actualCity;
@@ -309,14 +310,14 @@ const app: IApp = {
     console.log('Soumission du formulaire. Récupération des données...');
     const data = new FormData(app.cityForm);
     const newCity: any = data.get('city')?.toString()!; // Récupération de la valeur de l'input
-    const newCityConverted: any = encodeURIComponent(newCity); // filtre la valeur de l'input pour éviter les failles XSS
-    if (isNaN(newCityConverted)) {
-      // On vérifie également si la valeur saisie n'est pas juste un nombre
-      app.actualCity = newCityConverted; // On affecte la nouvelle ville a notre variable app.actualCity()
+    // On vérifie que la valeur saisie est bien une chaine de caractère
+    // On vérifie également si la valeur saisie n'est pas juste un nombre
+    if (isNaN(newCity) && newCity.match(/^[a-zA-ZÀ-ÿ\s'-]+$/)) {
+      app.actualCity = newCity; // On affecte la nouvelle ville a notre variable app.actualCity()
       app.refreshApp(); // Et on lance le refresh des infos du DOM avec la météo de la nouvelle ville
     } else {
       app.notify(
-        'Vous avez saisit un nombre ! Veuillez saisir une ville française 😄',
+        'Vous avez saisit des caractères incorrects ! Veuillez saisir une ville française 😄',
         5,
         'error'
       );
